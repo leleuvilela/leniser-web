@@ -41,6 +41,11 @@ const menuGroups = [
                 label: "Dashboard",
                 route: "/",
             },
+            {
+                icon: null,
+                label: "Members",
+                route: "/members",
+            }
         ],
     },
     {
@@ -83,14 +88,13 @@ const menuGroups = [
 
 const Sidebar = () => {
     const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
-    const [colorMode, setColorMode] = useColorMode();
 
     return (
         <aside
-            className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark translate-x-0
+            className={`fixed left-0 top-0 z-9999 flex h-screen w-72 flex-col overflow-y-hidden bg-lime-100 duration-300 ease-linear dark:bg-boxdark translate-x-0
                 }`}
         >
-            <div className="flex items-center justify-center gap-2 px-6 py-5.5 lg:py-6.5">
+            <div className="flex items-center justify-center gap-2 px-6 py-5 lg:py-6">
                 <Link href="/">
                     <h2 className="font-bold text-2xl text-center">Leniser</h2>
                 </Link>
