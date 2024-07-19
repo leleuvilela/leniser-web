@@ -1,4 +1,3 @@
-
 import client from "@/lib/mongodb"
 
 export async function GET(request: Request) {
@@ -25,3 +24,4 @@ export async function POST(request: Request, response: Response) {
         return Response.error()
     }
 }
+

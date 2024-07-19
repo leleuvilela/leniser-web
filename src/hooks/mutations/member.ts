@@ -15,6 +15,18 @@ const addMember = async (values: Member) => {
     return response.data;
 };
 
+const updateMember = async (values: Member) => {
+    const response = await axios.put(`/api/members/${values.id}`, values);
+
+    return response.data;
+}
+
+const deleteMember = async (id: string) => {
+    const response = await axios.delete(`/api/members/${id}`);
+
+    return response.data;
+}
+
 export const useNewMember = () => {
     return useMutation({
         mutationFn: addMember,
@@ -23,3 +35,21 @@ export const useNewMember = () => {
         }
     });
 };
+
+export const useUpdateMember = () => {
+    return useMutation({
+        mutationFn: updateMember,
+        onSuccess: () => {
+            queryClient.invalidateQueries("members")
+        }
+    });
+};
+
+export const useDeleteMember = () => {
+    return useMutation({
+        mutationFn: deleteMember,
+        onSuccess: () => {
+            queryClient.invalidateQueries("members")
+        }
+    });
+}

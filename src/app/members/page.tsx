@@ -1,14 +1,25 @@
 "use client";
 import DefaultLayout from "@/components/Layouts/DefaultLayout"
-import MemberDialog from "@/components/MemberDialog";
+import CreateMemberDialog from "@/components/MemberDialog/CreateMemberDialog";
+import EditMemberDialog from "@/components/MemberDialog/EditMemberDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { useDeleteMember } from "@/hooks/mutations/member";
 import { useMembers } from "@/hooks/queries/members";
-
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 
 const Members = () => {
     const { data } = useMembers();
+    const deleteMember = useDeleteMember();
+
+    async function handleDelete(id: string) {
+        try {
+            await deleteMember.mutateAsync(id);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <DefaultLayout>
@@ -17,7 +28,7 @@ const Members = () => {
                     <CardTitle>
                         Members
                     </CardTitle>
-                    <MemberDialog />
+                    <CreateMemberDialog />
                 </CardHeader>
                 <CardContent>
                     <Table>
@@ -27,6 +38,7 @@ const Members = () => {
                                 <TableHead className="w-[200px]">Id</TableHead>
                                 <TableHead>Name</TableHead>
                                 <TableHead>About</TableHead>
+                                <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -35,6 +47,14 @@ const Members = () => {
                                     <TableCell className="font-medium">{member.id}</TableCell>
                                     <TableCell>{member.name}</TableCell>
                                     <TableCell>{member.about}</TableCell>
+                                    <TableCell>
+                                        <div className="flex gap-3">
+                                            <EditMemberDialog id={member.id} />
+                                            <Button variant="ghost" onClick={() => handleDelete(member.id)}>
+                                                <FaTrash />
+                                            </Button>
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
