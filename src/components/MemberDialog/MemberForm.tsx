@@ -6,27 +6,50 @@ import { Button } from "../ui/button";
 import { DialogFooter } from "../ui/dialog";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, Form } from "../ui/form";
 import { Input } from "../ui/input";
+import MultipleSelector from "../ui/multipleselector";
+import { Member } from "@/hooks/queries/members";
 
 export const memberFormSchema = z.object({
-    id: z.string(),
-    name: z.string(),
-    about: z.string(),
+    _id: z.string(),
+    desc: z.string(),
+    permissions: z.array(z.object({
+        label: z.string(),
+        value: z.string(),
+    })),
 })
+
+const permissionsOptions = [
+    { label: "Message Create", value: "MESSAGE_CREATE" },
+    { label: "Message Revoke", value: "MESSAGE_REVOKE" },
+    { label: "Save Message", value: "SAVE_MESSAGE" },
+]
 
 interface MemberFormProps {
     onSubmit: (values: z.infer<typeof memberFormSchema>) => void;
-    values?: z.infer<typeof memberFormSchema>;
+    values?: Member;
+}
+
+function convertMemberToMemberForm(member?: Member): z.infer<typeof memberFormSchema> | undefined {
+    if (!member) {
+        return undefined;
+    }
+
+    return {
+        _id: member._id,
+        desc: member.desc,
+        permissions: member.permissions.map(p => permissionsOptions.find(po => po.value === p) || { label: p, value: p }),
+    }
 }
 
 export function MemberForm({ onSubmit, values }: MemberFormProps) {
     const form = useForm<z.infer<typeof memberFormSchema>>({
         resolver: zodResolver(memberFormSchema),
         defaultValues: {
-            id: "",
-            name: "",
-            about: "",
+            _id: "",
+            desc: "",
+            permissions: [],
         },
-        values
+        values: convertMemberToMemberForm(values),
     });
 
     return (
@@ -35,7 +58,7 @@ export function MemberForm({ onSubmit, values }: MemberFormProps) {
                 <div className="flex flex-col gap-4 my-2">
                     <FormField
                         control={form.control}
-                        name="id"
+                        name="_id"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>User identification (number)</FormLabel>
@@ -51,7 +74,7 @@ export function MemberForm({ onSubmit, values }: MemberFormProps) {
                     />
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="desc"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>User Name</FormLabel>
@@ -67,16 +90,22 @@ export function MemberForm({ onSubmit, values }: MemberFormProps) {
                     />
                     <FormField
                         control={form.control}
-                        name="about"
+                        name="permissions"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>About</FormLabel>
+                                <FormLabel>Permissions</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Lindo e gostoso" {...field} />
+                                    <MultipleSelector
+                                        {...field}
+                                        defaultOptions={permissionsOptions}
+                                        placeholder="Select permissions..."
+                                        emptyIndicator={
+                                            <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                                                no results found.
+                                            </p>
+                                        }
+                                    />
                                 </FormControl>
-                                <FormDescription>
-                                    This is the user description.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}

@@ -19,7 +19,11 @@ export function CreateMemberDialog() {
 
     async function onSubmit(values: z.infer<typeof memberFormSchema>) {
         try {
-            await newMember.mutateAsync(values);
+            const member = {
+                ...values,
+                permissions: values.permissions.map(p => p.value),
+            }
+            await newMember.mutateAsync(member);
             setOpen(false);
         } catch (e) {
             console.log(e);

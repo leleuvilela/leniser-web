@@ -1,4 +1,5 @@
 import client from "@/lib/mongodb"
+import { NumberPermissionsDocument } from "@/specs/numberPermissions";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     //get member by prop id from the route
@@ -6,7 +7,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     try {
         const db = client.db("rap")
-        const member = await db.collection("members").findOne({ id })
+        const member = await db.collection<NumberPermissionsDocument>("number_permissions").findOne({ _id: id })
 
         return Response.json(member)
     } catch (e) {
@@ -22,7 +23,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     try {
         const db = client.db("rap")
         const body = await request.json()
-        const member = await db.collection("members").updateOne({ id }, { $set: body });
+        const member = await db.collection<NumberPermissionsDocument>("number_permissions").updateOne({ _id: id }, { $set: body });
 
         return Response.json(member)
     } catch (e) {
@@ -36,7 +37,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
     try {
         const db = client.db("rap")
-        const member = await db.collection("members").deleteOne({ id })
+        const member = await db.collection<NumberPermissionsDocument>("number_permissions").deleteOne({ _id: id })
 
         return Response.json(member)
     } catch (e) {

@@ -8,7 +8,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { z } from "zod"
-import { useNewMember, useUpdateMember } from "@/hooks/mutations/member"
+import { useUpdateMember } from "@/hooks/mutations/member"
 import { useState } from "react"
 import { useMember } from "@/hooks/queries/members"
 import { MemberForm, memberFormSchema } from "./MemberForm"
@@ -26,7 +26,11 @@ export function MemberDialog({ id }: MemberEditProps) {
 
     async function onSubmit(values: z.infer<typeof memberFormSchema>) {
         try {
-            await newMember.mutateAsync(values);
+            const member = {
+                ...values,
+                permissions: values.permissions.map(p => p.value),
+            }
+            await newMember.mutateAsync(member);
             setOpen(false);
         } catch (e) {
             console.log(e);

@@ -2,9 +2,9 @@ import axios from "axios";
 import { useQuery } from "react-query";
 
 export type Member = {
-    id: string;
-    name: string;
-    about: string;
+    _id: string;
+    desc: string;
+    permissions: string[];
 }
 
 export const fetchMembers = async (): Promise<Member[]> => {

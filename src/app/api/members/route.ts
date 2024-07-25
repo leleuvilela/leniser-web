@@ -1,9 +1,10 @@
 import client from "@/lib/mongodb"
+import { NumberPermissionsDocument } from "@/specs/numberPermissions"
 
 export async function GET(request: Request) {
     try {
         const db = client.db("rap")
-        const members = await db.collection("members").find().toArray()
+        const members = await db.collection<NumberPermissionsDocument>("number_permissions").find().toArray()
 
         return Response.json(members)
     } catch (e) {
@@ -16,7 +17,7 @@ export async function POST(request: Request, response: Response) {
     try {
         const db = client.db("rap")
         const body = await request.json()
-        const member = await db.collection("members").insertOne(body);
+        const member = await db.collection<NumberPermissionsDocument>("number_permissions").insertOne(body);
 
         return Response.json(member)
     } catch (e) {

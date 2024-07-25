@@ -36,21 +36,21 @@ const Members = () => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="w-[200px]">Id</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>About</TableHead>
+                                <TableHead>Desc</TableHead>
+                                <TableHead>Permissions</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {data?.map(member => (
-                                <TableRow key={member.id}>
-                                    <TableCell className="font-medium">{member.id}</TableCell>
-                                    <TableCell>{member.name}</TableCell>
-                                    <TableCell>{member.about}</TableCell>
+                                <TableRow key={member._id}>
+                                    <TableCell className="font-medium">{member._id}</TableCell>
+                                    <TableCell>{member.desc}</TableCell>
+                                    <TableCell>{member.permissions.join(" ")}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-3">
-                                            <EditMemberDialog id={member.id} />
-                                            <Button variant="ghost" onClick={() => handleDelete(member.id)}>
+                                            <EditMemberDialog id={member._id} />
+                                            <Button variant="ghost" onClick={() => handleDelete(member._id)}>
                                                 <FaTrash />
                                             </Button>
                                         </div>
@@ -60,8 +60,6 @@ const Members = () => {
                         </TableBody>
                     </Table>
                 </CardContent>
-                <CardFooter>
-                </CardFooter>
             </Card>
         </DefaultLayout>
     )
