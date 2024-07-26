@@ -2,9 +2,17 @@ import axios from "axios";
 import { useQuery } from "react-query";
 
 export type Member = {
-    _id: string;
+    id: string;
     desc: string;
     permissions: string[];
+    configs: MemberConfigs;
+}
+
+export interface MemberConfigs {
+    imageCooldownEnabled: boolean;
+    imageCooldownTime: number;
+    systemPrompt: string;
+    botPrefix: string;
 }
 
 export const fetchMembers = async (): Promise<Member[]> => {

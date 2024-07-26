@@ -31,11 +31,11 @@ export function CreateMemberDialog() {
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={setOpen} modal>
             <DialogTrigger asChild>
                 <Button variant="outline">New Member</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-xl overflow-y-scroll">
                 <DialogHeader>
                     <DialogTitle>Create Member</DialogTitle>
                     <DialogDescription>

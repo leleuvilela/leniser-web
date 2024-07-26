@@ -44,7 +44,7 @@ export function MemberDialog({ id }: MemberEditProps) {
                     <FaPencilAlt />
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md overflow-y-scroll">
                 <DialogHeader>
                     <DialogTitle>Edit Member</DialogTitle>
                     <DialogDescription>

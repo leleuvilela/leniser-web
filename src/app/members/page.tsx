@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { useDeleteMember } from "@/hooks/mutations/member";
 import { useMembers } from "@/hooks/queries/members";
-import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 const Members = () => {
     const { data } = useMembers();
@@ -43,14 +43,14 @@ const Members = () => {
                         </TableHeader>
                         <TableBody>
                             {data?.map(member => (
-                                <TableRow key={member._id}>
-                                    <TableCell className="font-medium">{member._id}</TableCell>
+                                <TableRow key={member.id}>
+                                    <TableCell className="font-medium">{member.id}</TableCell>
                                     <TableCell>{member.desc}</TableCell>
                                     <TableCell>{member.permissions.join(" ")}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-3">
-                                            <EditMemberDialog id={member._id} />
-                                            <Button variant="ghost" onClick={() => handleDelete(member._id)}>
+                                            <EditMemberDialog id={member.id} />
+                                            <Button variant="ghost" onClick={() => handleDelete(member.id)}>
                                                 <FaTrash />
                                             </Button>
                                         </div>

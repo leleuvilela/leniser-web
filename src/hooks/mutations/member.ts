@@ -1,12 +1,19 @@
-
 import { useMutation } from "react-query";
 import axios from "axios";
 import { queryClient } from "@/lib/query";
 
 export type Member = {
-    _id: string;
+    id: string;
     desc: string;
     permissions: string[];
+    configs: MemberConfigs;
+}
+
+export interface MemberConfigs {
+    imageCooldownEnabled: boolean;
+    imageCooldownTime: number;
+    systemPrompt: string;
+    botPrefix: string;
 }
 
 const addMember = async (values: Member) => {
@@ -16,7 +23,7 @@ const addMember = async (values: Member) => {
 };
 
 const updateMember = async (values: Member) => {
-    const response = await axios.put(`/api/members/${values._id}`, values);
+    const response = await axios.put(`/api/members/${values.id}`, values);
 
     return response.data;
 }
