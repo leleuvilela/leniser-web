@@ -20,7 +20,7 @@ export const memberFormSchema = z.object({
     })),
     configs: z.object({
         imageCooldownEnabled: z.boolean(),
-        imageCooldownTime: z.number(),
+        imageCooldownTime: z.coerce.number(),
         systemPrompt: z.string(),
         botPrefix: z.string(),
     })
@@ -59,7 +59,7 @@ export function MemberForm({ onSubmit, values }: MemberFormProps) {
             permissions: [],
             configs: {
                 imageCooldownEnabled: false,
-                imageCooldownTime: 120,
+                imageCooldownTime: 2,
                 systemPrompt: "",
                 botPrefix: ""
             }
@@ -178,7 +178,7 @@ export function MemberForm({ onSubmit, values }: MemberFormProps) {
                                         <Input type="number" placeholder="120" {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        This is the time in seconds that the bot will wait before sending another image.
+                                        This is the time in minutes that the bot will wait before sending another image.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

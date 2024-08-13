@@ -18,7 +18,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 
 const schema = z.object({
     imageCooldownEnabled: z.boolean(),
-    imageCooldownTime: z.number(),
+    imageCooldownTime: z.coerce.number(),
     systemPrompt: z.string().min(10),
     botPrefix: z.string().min(2),
 })
@@ -37,7 +37,7 @@ const Settings = () => {
             systemPrompt: "",
             botPrefix: "",
         },
-        values: settings.data,
+        values: settings.data?.defaultMemberConfigs,
     });
 
     const cooldownEnabled = form.watch("imageCooldownEnabled");

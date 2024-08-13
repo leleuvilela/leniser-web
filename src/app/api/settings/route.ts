@@ -4,9 +4,11 @@ import { ConfigsDocument } from "@/specs/configs"
 export async function GET(request: Request) {
     try {
         const db = client.db("rap")
-        const configs = await db.collection<ConfigsDocument>("configs").find().toArray()
+        const config = await db.collection<ConfigsDocument>("configs").findOne({
+            type: "general"
+        })
 
-        return Response.json(configs[0])
+        return Response.json(config)
     } catch (e) {
         console.error(e)
         return Response.error()
@@ -18,8 +20,8 @@ export async function POST(request: Request, response: Response) {
         const db = client.db("rap")
         const body = await request.json()
         const config = await db.collection<ConfigsDocument>("configs").findOneAndUpdate(
-            {},
-            { $set: body },
+            { type: "general" },
+            { $set: { defaultMemberConfigs: body } },
             { upsert: true, returnDocument: "after" }
         )
 

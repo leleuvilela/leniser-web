@@ -1,14 +1,8 @@
+import { ConfigsDocument } from '@/specs/configs';
 import axios from 'axios';
 import { useQuery, UseQueryResult } from 'react-query';
 
-type Settings = {
-    imageCooldownEnabled: boolean;
-    imageCooldownTime: number;
-    systemPrompt: string;
-    botPrefix: string;
-}
-
-const fetchSettings = async (): Promise<Settings> => {
+const fetchSettings = async (): Promise<ConfigsDocument> => {
     const response = await axios.get('/api/settings');
     return response?.data;
 }
