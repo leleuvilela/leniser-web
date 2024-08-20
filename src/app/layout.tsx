@@ -7,7 +7,7 @@ import Loader from "@/components/common/Loader";
 import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { queryClient } from "@/lib/query";
 
 const fontSans = FontSans({

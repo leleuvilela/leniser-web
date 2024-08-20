@@ -11,6 +11,7 @@ import { z } from "zod"
 import { useNewMember } from "@/hooks/mutations/member"
 import { useState } from "react"
 import { MemberForm, memberFormSchema } from "./MemberForm"
+import { PlusIcon } from "lucide-react"
 
 export function CreateMemberDialog() {
     const [open, setOpen] = useState(false);
@@ -33,7 +34,10 @@ export function CreateMemberDialog() {
     return (
         <Dialog open={open} onOpenChange={setOpen} modal>
             <DialogTrigger asChild>
-                <Button variant="outline">New Member</Button>
+                <Button size="sm" className="h-8 gap-1">
+                    <PlusIcon className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Member</span>
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-xl overflow-y-scroll">
                 <DialogHeader>
